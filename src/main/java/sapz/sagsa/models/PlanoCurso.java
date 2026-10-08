@@ -12,6 +12,11 @@ import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,6 +25,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = PlanoCurso.TABLE_NAME)
+@AllArgsConstructor 
+@NoArgsConstructor 
+@Getter 
+@Setter 
+@EqualsAndHashCode(onlyExplicitlyIncluded = true) 
 public class PlanoCurso {
 
     public static final String TABLE_NAME = "planos_curso";
@@ -27,6 +37,7 @@ public class PlanoCurso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_plano", unique = true)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(name = "titulo", length = 150, nullable = false)
@@ -48,95 +59,12 @@ public class PlanoCurso {
     @Column(name = "data_criacao", nullable = false, updatable = false)
     private LocalDateTime dataCriacao;
 
-    // Relação 1-para-Muitos com o SAPZ
     @OneToMany(mappedBy = "plano")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Sapz> sapzs = new ArrayList<>();
 
-    public PlanoCurso() {
-    }
-
-    public PlanoCurso(Long id, String titulo, String descricao, Integer cargaHoraria, Boolean ativo) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.cargaHoraria = cargaHoraria;
-        this.ativo = ativo;
-    }
-
     @PrePersist
     protected void onCreate() {
         this.dataCriacao = LocalDateTime.now();
-    }
-
-    // Getters e Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Integer getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public void setCargaHoraria(Integer cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public void setDataCriacao(LocalDateTime dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public List<Sapz> getSapzs() {
-        return sapzs;
-    }
-
-    public void setSapzs(List<Sapz> sapzs) {
-        this.sapzs = sapzs;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        PlanoCurso other = (PlanoCurso) obj;
-        return Objects.equals(this.id, other.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
     }
 }

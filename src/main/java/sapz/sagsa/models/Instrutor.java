@@ -10,11 +10,19 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = Instrutor.TABLE_NAME)
+@AllArgsConstructor 
+@NoArgsConstructor 
+@Getter 
+@Setter 
 public class Instrutor {
 
     public static final String TABLE_NAME = "instrutores";
@@ -50,78 +58,4 @@ public class Instrutor {
     @Column(name = "ativo", nullable = false)
     private Boolean ativo = true;
 
-    public Instrutor() {
-    }
-
-    public Instrutor(Long id, String nome, String cpf, String email, String especialidade, Boolean ativo) {
-        this.id = id;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.especialidade = especialidade;
-        this.ativo = ativo;
-    }
-
-    // Getters e Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Instrutor other = (Instrutor) obj;
-        return Objects.equals(this.id, other.id) && Objects.equals(this.cpf, other.cpf);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.cpf);
-    }
 }

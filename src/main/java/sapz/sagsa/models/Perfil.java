@@ -9,11 +9,20 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = Perfil.TABLE_NAME)
+@AllArgsConstructor 
+@NoArgsConstructor 
+@Getter 
+@Setter 
 public class Perfil {
 
     public static final String TABLE_NAME = "perfis";
@@ -29,42 +38,4 @@ public class Perfil {
     @Size(min = 2, max = 50)
     private String cargo;
 
-    public Perfil() {
-    }
-
-    public Perfil(Long id, String cargo) {
-        this.id = id;
-        this.cargo = cargo;
-    }
-
-    // Getters e Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Perfil other = (Perfil) obj;
-        return Objects.equals(this.id, other.id) && Objects.equals(this.cargo, other.cargo);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.cargo);
-    }
 }
